@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizon.Burger | Лучшие бургеры в Обнинске</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        .font-bebas {
+            font-family: 'Bebas Neue', cursive;
+        }
+
+        /* Brand Colors */
+        .bg-bizon-black { background: #0a0a0a; }
+        .bg-bizon-green { background: #00ff41; }
+        .bg-bizon-yellow { background: #ffd700; }
+        .text-bizon-green { color: #00ff41; }
+        .text-bizon-yellow { color: #ffd700; }
+        .border-bizon-green { border-color: #00ff41; }
+        .border-bizon-yellow { border-color: #ffd700; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 3px solid #00ff41;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 8px 16px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transform: translateX(-50%);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link.active {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a2a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff41, #00cc33);
+            color: #0a0a0a;
+            padding: 16px 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 255, 65, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 255, 65, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffd700;
+            padding: 16px 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: 3px solid #ffd700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #ffd700;
+            color: #0a0a0a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Menu Card */
+        .menu-card {
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            border-left: 5px solid #00ff41;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu-card:hover::before {
+            left: 100%;
+        }
+
+        .menu-card:hover {
+            border-color: #00ff41;
+            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.3);
+            transform: translateY(-8px);
+            border-left-color: #ffd700;
+        }
+
+        .menu-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .menu-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Price Tag */
+        .price-tag {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #0a0a0a;
+            padding: 8px 20px;
+            font-weight: 800;
+            font-size: 24px;
+            display: inline-block;
+            transform: rotate(-3deg);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Category Pills */
+        .category-pill {
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .category-pill.active,
+        .category-pill:hover {
+            background: #00ff41;
+            color: #0a0a0a;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 255, 65, 0.5);
+        }
+
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ffd700;
+            color: #0a0a0a;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 12px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 3px solid #00ff41;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Cart Items */
+        .cart-item {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-left: 3px solid #00ff41;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            border-top: 3px solid #00ff41;
+        }
+
+        /* Page Transitions */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Review Card */
+        .review-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-left: 5px solid #ffd700;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .review-card:hover {
+            border-color: #ffd700;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* Star Rating */
+        .stars {
+            color: #ffd700;
+            font-size: 20px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00ff41, #ffd700);
+            border-radius: 10px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 999;
+            padding: 80px 20px;
+            animation: slideInLeft 0.3s ease-out;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Quantity Controls */
+        .qty-btn {
+            background: #00ff41;
+            color: #0a0a0a;
+            width: 35px;
+            height: 35px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: #ffd700;
+            transform: scale(1.1);
+        }
+
+        /* Image Placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+                    <div class="text-4xl">🦬</div>
+                    <div>
+                        <div class="font-bebas text-3xl text-bizon-green">BIZON.BURGER</div>
+                        <div class="text-xs text-bizon-yellow">Обнинск</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a class="nav-link active" onclick="showPage('home')">Главная</a>
+                    <a class="nav-link" onclick="showPage('menu')">Меню</a>
+                    <a class="nav-link" onclick="showPage('gallery')">Галерея</a>
+                    <a class="nav-link" onclick="showPage('reviews')">Отзывы</a>
+                    <a class="nav-link" onclick="showPage('contacts')">Контакты</a>
+
+                    <!-- Cart Icon -->
+                    <div class="relative cursor-pointer" onclick="openCart()">
+                        <i class="fas fa-shopping-cart text-2xl text-bizon-yellow hover:text-bizon-green transition-all"></i>
+                        <span id="cart-count" class="cart-badge" style="display: none;">0</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-3xl text-bizon-green" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <button class="absolute top-6 right-6 text-4xl text-bizon-green" onclick="toggleMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="flex flex-col gap-6 text-center">
+            <a class="text-2xl font-bold text-white hover:text-bizon-green transition-all" onclick="showPage('home'); toggleMobileMenu();">Главная</a>
+            <a class="text-2xl font-bold text-white hover:text-bizon-green transition-all" onclick="showPage('menu'); toggleMobileMenu();">Меню</a>
+            <a class="text-2xl font-bold text-white hover:text-bizon-green transition-all" onclick="showPage('gallery'); toggleMobileMenu();">Галерея</a>
+            <a class="text-2xl font-bold text-white hover:text-bizon-green transition-all" onclick="showPage('reviews'); toggleMobileMenu();">Отзывы</a>
+            <a class="text-2xl font-bold text-white hover:text-bizon-green transition-all" onclick="showPage('contacts'); toggleMobileMenu();">Контакты</a>
+            <button class="btn-primary w-full" onclick="openCart(); toggleMobileMenu();">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Корзина (<span id="mobile-cart-count">0</span>)
+            </button>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero-bg min-h-screen flex items-center pt-20">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-5xl mx-auto">
+                    <div class="text-8xl mb-6 animate-bounce">🦬</div>
+                    <h1 class="font-bebas text-7xl md:text-9xl text-bizon-green mb-6">
+                        BIZON.BURGER
+                    </h1>
+                    <p class="text-2xl md:text-4xl text-bizon-yellow font-bold mb-6">
+                        Лучшие бургеры в Обнинске
+                    </p>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
+                        Потрясающе вкусные бургеры от Геннадия — 
+                        настоящая страсть к качеству и вкусу в каждом укусе! 🔥
+                    </p>
+                    <div class="flex flex-wrap gap-6 justify-center">
+                        <button class="btn-primary" onclick="showPage('menu')">
+                            <i class="fas fa-utensils mr-2"></i>
+                            Смотреть меню
+                        </button>
+                        <button class="btn-secondary" onclick="showPage('contacts')">
+                            <i class="fas fa-phone mr-2"></i>
+                            Связаться с нами
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="py-20 bg-black">
+            <div class="container mx-auto px-6">
+                <h2 class="font-bebas text-5xl md:text-7xl text-center text-bizon-yellow mb-16">
+                    Почему мы?
+                </h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-8 bg-gradient-to-b from-gray-900 to-black border-2 border-bizon-green hover:border-bizon-yellow transition-all">
+                        <div class="text-6xl mb-6">👨‍🍳</div>
+                        <h3 class="font-bebas text-3xl text-bizon-green mb-4">Мастер своего дела</h3>
+                        <p class="text-gray-300 text-lg">
+                            Геннадий лично готовит каждый бургер с любовью и страстью. 
+                            Более 10 лет опыта в кулинарии!
+                        </p>
+                    </div>
+                    <div class="text-center p-8 bg-gradient-to-b from-gray-900 to-black border-2 border-bizon-green hover:border-bizon-yellow transition-all">
+                        <div class="text-6xl mb-6">🥩</div>
+                        <h3 class="font-bebas text-3xl text-bizon-green mb-4">Свежие продукты</h3>
+                        <p class="text-gray-300 text-lg">
+                            Только свежие ингредиенты высшего качества. 
+                            Каждый день новые поставки от проверенных поставщиков!
+                        </p>
+                    </div>
+                    <div class="text-center p-8 bg-gradient-to-b from-gray-900 to-black border-2 border-bizon-green hover:border-bizon-yellow transition-all">
+                        <div class="text-6xl mb-6">❤️</div>
+                        <h3 class="font-bebas text-3xl text-bizon-green mb-4">Душевная атмосфера</h3>
+                        <p class="text-gray-300 text-lg">
+                            Не просто бургерная — это место, где вас встретят как друзей. 
+                            Уютно, тепло и по-домашнему!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Items Preview -->
+        <section class="py-20 bg-gradient-to-b from-black to-gray-900">
+            <div class="container mx-auto px-6">
+                <h2 class="font-bebas text-5xl md:text-7xl text-center text-bizon-green mb-16">
+                    Хиты продаж
+                </h2>
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="menu-card rounded-lg overflow-hidden">
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Bizon Classic</h3>
+                            <p class="text-gray-400 mb-4">Классический бургер с говяжьей котлетой, свежими овощами и фирменным соусом</p>
+                            <div class="price-tag">450 ₽</div>
+                        </div>
+                    </div>
+                    <div class="menu-card rounded-lg overflow-hidden">
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">BBQ Beast</h3>
+                            <p class="text-gray-400 mb-4">Двойная котлета с беконом, сыром чеддер и BBQ соусом</p>
+                            <div class="price-tag">590 ₽</div>
+                        </div>
+                    </div>
+                    <div class="menu-card rounded-lg overflow-hidden">
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Chicken Explosion</h3>
+                            <p class="text-gray-400 mb-4">Хрустящая куриная котлета с острым соусом и маринованными огурцами</p>
+                            <div class="price-tag">420 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn-primary" onclick="showPage('menu')">
+                        <i class="fas fa-th-list mr-2"></i>
+                        Полное меню
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MENU PAGE -->
+    <div id="page-menu" class="page">
+        <section class="pt-32 pb-20 bg-gradient-to-b from-black to-gray-900 min-h-screen">
+            <div class="container mx-auto px-6">
+                <h1 class="font-bebas text-6xl md:text-8xl text-center text-bizon-green mb-6">
+                    Наше меню
+                </h1>
+                <p class="text-center text-xl text-gray-400 mb-12">
+                    Выбирайте и добавляйте в корзину — доставим горячим и вкусным! 🔥
+                </p>
+
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-4 mb-16">
+                    <button class="category-pill active" onclick="filterMenu('all')">Всё меню</button>
+                    <button class="category-pill" onclick="filterMenu('burgers')">Бургеры</button>
+                    <button class="category-pill" onclick="filterMenu('sides')">Закуски</button>
+                    <button class="category-pill" onclick="filterMenu('drinks')">Напитки</button>
+                    <button class="category-pill" onclick="filterMenu('desserts')">Десерты</button>
+                </div>
+
+                <!-- Menu Items Grid -->
+                <div id="menu-grid" class="grid md:grid-cols-3 gap-8">
+                    <!-- Бургеры -->
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="burgers" data-item='{"id":1,"name":"Bizon Classic","price":450,"category":"burgers","description":"Классический бургер с говяжьей котлетой 180г, свежими овощами, сыром и фирменным соусом"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Bizon Classic</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Классический бургер с говяжьей котлетой 180г, свежими овощами, сыром и фирменным соусом</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">450 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="burgers" data-item='{"id":2,"name":"BBQ Beast","price":590,"category":"burgers","description":"Двойная говяжья котлета 2x150г, бекон, сыр чеддер, карамелизированный лук, BBQ соус"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">BBQ Beast</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Двойная говяжья котлета 2x150г, бекон, сыр чеддер, карамелизированный лук, BBQ соус</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">590 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(2)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="burgers" data-item='{"id":3,"name":"Chicken Explosion","price":420,"category":"burgers","description":"Хрустящая куриная котлета 200г, острый соус, маринованные огурцы, салат айсберг"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Chicken Explosion</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Хрустящая куриная котлета 200г, острый соус, маринованные огурцы, салат айсберг</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">420 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(3)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="burgers" data-item='{"id":4,"name":"Cheeseburger Deluxe","price":520,"category":"burgers","description":"Тройной сыр (чеддер, моцарелла, пармезан), говяжья котлета 180г, сырный соус"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-cheese"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Cheeseburger Deluxe</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Тройной сыр (чеддер, моцарелла, пармезан), говяжья котлета 180г, сырный соус</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">520 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(4)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="burgers" data-item='{"id":5,"name":"Mushroom Swiss","price":480,"category":"burgers","description":"Жареные грибы, швейцарский сыр, говяжья котлета 180г, трюфельный майонез"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Mushroom Swiss</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Жареные грибы, швейцарский сыр, говяжья котлета 180г, трюфельный майонез</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">480 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(5)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="burgers" data-item='{"id":6,"name":"Spicy Jalapeño","price":470,"category":"burgers","description":"Острые перцы халапеньо, говяжья котлета 180г, чили-соус, сыр пеперджек"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-pepper-hot"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Spicy Jalapeño</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Острые перцы халапеньо, говяжья котлета 180г, чили-соус, сыр пеперджек</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">470 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(6)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Закуски -->
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="sides" data-item='{"id":7,"name":"Картофель фри","price":150,"category":"sides","description":"Хрустящий картофель фри с морской солью (250г)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-french-fries"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Картофель фри</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Хрустящий картофель фри с морской солью (250г)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">150 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(7)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="sides" data-item='{"id":8,"name":"Луковые кольца","price":180,"category":"sides","description":"Золотистые луковые кольца в хрустящем кляре (200г)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-ring"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Луковые кольца</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Золотистые луковые кольца в хрустящем кляре (200г)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">180 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(8)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="sides" data-item='{"id":9,"name":"Куриные стрипсы","price":220,"category":"sides","description":"Нежные куриные стрипсы с соусом на выбор (4 шт)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Куриные стрипсы</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Нежные куриные стрипсы с соусом на выбор (4 шт)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">220 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(9)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="sides" data-item='{"id":10,"name":"Сырные палочки","price":200,"category":"sides","description":"Моцарелла в панировке с томатным соусом (6 шт)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-cheese"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Сырные палочки</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Моцарелла в панировке с томатным соусом (6 шт)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">200 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(10)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Напитки -->
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="drinks" data-item='{"id":11,"name":"Coca-Cola","price":100,"category":"drinks","description":"Классическая Coca-Cola (0.5л)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-glass-whiskey"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Coca-Cola</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Классическая Coca-Cola (0.5л)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">100 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(11)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="drinks" data-item='{"id":12,"name":"Лимонад домашний","price":120,"category":"drinks","description":"Освежающий домашний лимонад (0.4л)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-lemon"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Лимонад домашний</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Освежающий домашний лимонад (0.4л)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">120 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(12)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="drinks" data-item='{"id":13,"name":"Милкшейк","price":180,"category":"drinks","description":"Молочный коктейль (ваниль/шоколад/клубника) (0.4л)"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-ice-cream"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Милкшейк</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Молочный коктейль (ваниль/шоколад/клубника) (0.4л)</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">180 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(13)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Десерты -->
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="desserts" data-item='{"id":14,"name":"Чизкейк NY","price":200,"category":"desserts","description":"Классический нью-йоркский чизкейк"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Чизкейк NY</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Классический нью-йоркский чизкейк</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">200 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(14)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card rounded-lg overflow-hidden" data-category="desserts" data-item='{"id":15,"name":"Шоколадный брауни","price":150,"category":"desserts","description":"Тёплый шоколадный брауни с мороженым"}'>
+                        <div class="img-placeholder" style="height: 200px;">
+                            <i class="fas fa-cookie-bite"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bebas text-3xl text-bizon-yellow mb-2">Шоколадный брауни</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Тёплый шоколадный брауни с мороженым</p>
+                            <div class="flex justify-between items-center">
+                                <div class="price-tag">150 ₽</div>
+                                <button class="btn-primary text-sm py-2 px-4" onclick="addToCart(15)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- GALLERY PAGE -->
+    <div id="page-gallery" class="page">
+        <section class="pt-32 pb-20 bg-black min-h-screen">
+            <div class="container mx-auto px-6">
+                <h1 class="font-bebas text-6xl md:text-8xl text-center text-bizon-yellow mb-6">
+                    Галерея
+                </h1>
+                <p class="text-center text-xl text-gray-400 mb-12">
+                    Посмотрите на наши аппетитные творения! 📸
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="img-placeholder aspect-square rounded-lg hover:scale-105 transition-all cursor-pointer border-2 border-bizon-green">
+                        <i class="fas fa-hamburger text-6xl"></i>
+                    </div>
+                    <div class="img-placeholder aspect-square rounded-lg hover:scale-105 transition-all cursor-pointer border-2 border-bizon-yellow">
+                        <i class="fas fa-drumstick-bite text-6xl"></i>
+                    </div>
+                    <div class="img-placeholder aspect-square rounded-lg hover:scale-105 transition-all cursor-pointer border-2 border-bizon-green">
+                        <i class="fas fa-cheese text-6xl"></i>
+                    </div>
+                    <div class="img-placeholder aspect-square rounded-lg hover:scale-105 transition-all cursor-pointer border-2 border-bizon-yellow">
+                        <i class="fas fa-french-fries text-6xl"></i>
+                    </div>
+                    <div class="img-placeholder aspect-square rounded-lg hover:scale-105 transition-all cursor-pointer border-2 border-bizon-green">
+                        <i class="fas fa-ice-cream text-6xl"></i>
+                    </div>
+                    <div class="img-placeholder aspect-square rounded-lg hover:scale-105 transition-all cursor-pointer border-2 border-bizon-yellow">
+                        <i class="fas fa-pepper-hot text-6xl"></i>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <p class="text-gray-500 italic">
+                        💡 Фото реальных блюд можно добавить позже — просто замените placeholder'ы на ссылки к изображениям
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- REVIEWS PAGE -->
+    <div id="page-reviews" class="page">
+        <section class="pt-32 pb-20 bg-gradient-to-b from-black to-gray-900 min-h-screen">
+            <div class="container mx-auto px-6">
+                <h1 class="font-bebas text-6xl md:text-8xl text-center text-bizon-green mb-6">
+                    Отзывы гостей
+                </h1>
+                <p class="text-center text-xl text-gray-400 mb-12">
+                    Что говорят наши счастливые клиенты 💚
+                </p>
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="review-card rounded-lg">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-bizon-green rounded-full flex items-center justify-center text-3xl">
+                                👨
+                            </div>
+                            <div>
+                                <div class="font-bold text-xl text-white">Константин</div>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg">
+                            Я постоянно хожу в Bizon.Burger! Геннадий — мастер своего дела, 
+                            готовит потрясающе вкусно! Атмосфера душевная, а бургеры просто космос! 🔥
+                        </p>
+                    </div>
+
+                    <div class="review-card rounded-lg">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-bizon-yellow rounded-full flex items-center justify-center text-3xl">
+                                👩
+                            </div>
+                            <div>
+                                <div class="font-bold text-xl text-white">Анна</div>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg">
+                            Лучшая бургерная в Обнинске! Всё всегда свежее, вкусное, 
+                            порции огромные. BBQ Beast — моя любовь! ❤️
+                        </p>
+                    </div>
+
+                    <div class="review-card rounded-lg">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-bizon-green rounded-full flex items-center justify-center text-3xl">
+                                👨
+                            </div>
+                            <div>
+                                <div class="font-bold text-xl text-white">Дмитрий</div>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg">
+                            Заказываю здесь каждую неделю. Доставка быстрая, 
+                            бургеры приезжают горячими. Цены адекватные, качество на высоте!
+                        </p>
+                    </div>
+
+                    <div class="review-card rounded-lg">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-bizon-yellow rounded-full flex items-center justify-center text-3xl">
+                                👩
+                            </div>
+                            <div>
+                                <div class="font-bold text-xl text-white">Елена</div>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg">
+                            Попробовала Chicken Explosion — это что-то невероятное! 
+                            Хрустящая корочка, сочная курица, идеальный баланс специй. Браво! 👏
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACTS PAGE -->
+    <div id="page-contacts" class="page">
+        <section class="pt-32 pb-20 bg-black min-h-screen">
+            <div class="container mx-auto px-6">
+                <h1 class="font-bebas text-6xl md:text-8xl text-center text-bizon-yellow mb-6">
+                    Контакты
+                </h1>
+                <p class="text-center text-xl text-gray-400 mb-12">
+                    Приходите к нам или закажите доставку! 🚀
+                </p>
+                <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                    <div>
+                        <h3 class="font-bebas text-4xl text-bizon-green mb-6">Наш адрес</h3>
+                        <div class="space-y-4 text-lg">
+                            <div class="flex items-start gap-4">
+                                <i class="fas fa-map-marker-alt text-2xl text-bizon-yellow mt-1"></i>
+                                <div>
+                                    <div class="text-white font-bold">Адрес:</div>
+                                    <div class="text-gray-400">г. Обнинск, ул. Ленина, 123</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i class="fas fa-clock text-2xl text-bizon-yellow mt-1"></i>
+                                <div>
+                                    <div class="text-white font-bold">Часы работы:</div>
+                                    <div class="text-gray-400">Пн-Вс: 11:00 - 23:00</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i class="fas fa-phone text-2xl text-bizon-yellow mt-1"></i>
+                                <div>
+                                    <div class="text-white font-bold">Телефон:</div>
+                                    <div class="text-gray-400">+7 (XXX) XXX-XX-XX</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i class="fas fa-envelope text-2xl text-bizon-yellow mt-1"></i>
+                                <div>
+                                    <div class="text-white font-bold">Email:</div>
+                                    <div class="text-gray-400">info@bizon-burger.ru</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="font-bebas text-3xl text-bizon-green mb-4">Социальные сети</h4>
+                            <div class="flex gap-4">
+                                <a href="#" class="w-14 h-14 bg-bizon-green flex items-center justify-center text-2xl text-black hover:bg-bizon-yellow transition-all">
+                                    <i class="fab fa-vk"></i>
+                                </a>
+                                <a href="#" class="w-14 h-14 bg-bizon-green flex items-center justify-center text-2xl text-black hover:bg-bizon-yellow transition-all">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-14 h-14 bg-bizon-green flex items-center justify-center text-2xl text-black hover:bg-bizon-yellow transition-all">
+                                    <i class="fab fa-telegram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bebas text-4xl text-bizon-green mb-6">Карта</h3>
+                        <div class="w-full h-96 bg-gray-800 rounded-lg flex items-center justify-center border-2 border-bizon-green">
+                            <div class="text-center text-gray-500">
+                                <i class="fas fa-map text-6xl mb-4"></i>
+                                <p>Здесь будет карта Яндекс или Google Maps</p>
+                                <p class="text-sm mt-2">Вставьте iframe с картой</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="p-8 bg-bizon-green">
+                <div class="flex justify-between items-center">
+                    <h2 class="font-bebas text-5xl text-black">Ваш заказ</h2>
+                    <button class="text-4xl text-black hover:text-white transition-all" onclick="closeCart()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-8">
+                <div id="cart-items" class="space-y-4 mb-8">
+                    <!-- Cart items will be inserted here -->
+                </div>
+                <div class="border-t-2 border-bizon-green pt-6">
+                    <div class="flex justify-between items-center text-2xl font-bold mb-6">
+                        <span class="text-white">Итого:</span>
+                        <span class="text-bizon-yellow" id="cart-total">0 ₽</span>
+                    </div>
+                    <button class="btn-primary w-full" onclick="checkout()">
+                        <i class="fas fa-check mr-2"></i>
+                        Оформить заказ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-bizon-black border-t-3 border-bizon-green py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-5xl">🦬</div>
+                        <div class="font-bebas text-4xl text-bizon-green">BIZON.BURGER</div>
+                    </div>
+                    <p class="text-gray-400">
+                        Лучшие бургеры в Обнинске с 2020 года. 
+                        Готовим с любовью и страстью каждый день!
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bebas text-2xl text-bizon-yellow mb-4">Навигация</h4>
+                    <div class="space-y-2">
+                        <div><a href="#" onclick="showPage('home')" class="text-gray-400 hover:text-bizon-green transition-all">Главная</a></div>
+                        <div><a href="#" onclick="showPage('menu')" class="text-gray-400 hover:text-bizon-green transition-all">Меню</a></div>
+                        <div><a href="#" onclick="showPage('gallery')" class="text-gray-400 hover:text-bizon-green transition-all">Галерея</a></div>
+                        <div><a href="#" onclick="showPage('reviews')" class="text-gray-400 hover:text-bizon-green transition-all">Отзывы</a></div>
+                        <div><a href="#" onclick="showPage('contacts')" class="text-gray-400 hover:text-bizon-green transition-all">Контакты</a></div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bebas text-2xl text-bizon-yellow mb-4">Контакты</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <div>г. Обнинск, ул. Ленина, 123</div>
+                        <div>+7 (XXX) XXX-XX-XX</div>
+                        <div>info@bizon-burger.ru</div>
+                        <div>Пн-Вс: 11:00 - 23:00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>© 2026 Bizon.Burger. Все права защищены.</p>
+                <p class="mt-2 text-sm">
+                    Сделано с <span class="text-bizon-green">❤️</span> для Геннадия и его гостей
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global State
+        let cart = [];
+        let currentPage = 'home';
+
+        // Menu Items Database
+        const menuItems = {
+            1: {id: 1, name: "Bizon Classic", price: 450, category: "burgers"},
+            2: {id: 2, name: "BBQ Beast", price: 590, category: "burgers"},
+            3: {id: 3, name: "Chicken Explosion", price: 420, category: "burgers"},
+            4: {id: 4, name: "Cheeseburger Deluxe", price: 520, category: "burgers"},
+            5: {id: 5, name: "Mushroom Swiss", price: 480, category: "burgers"},
+            6: {id: 6, name: "Spicy Jalapeño", price: 470, category: "burgers"},
+            7: {id: 7, name: "Картофель фри", price: 150, category: "sides"},
+            8: {id: 8, name: "Луковые кольца", price: 180, category: "sides"},
+            9: {id: 9, name: "Куриные стрипсы", price: 220, category: "sides"},
+            10: {id: 10, name: "Сырные палочки", price: 200, category: "sides"},
+            11: {id: 11, name: "Coca-Cola", price: 100, category: "drinks"},
+            12: {id: 12, name: "Лимонад домашний", price: 120, category: "drinks"},
+            13: {id: 13, name: "Милкшейк", price: 180, category: "drinks"},
+            14: {id: 14, name: "Чизкейк NY", price: 200, category: "desserts"},
+            15: {id: 15, name: "Шоколадный брауни", price: 150, category: "desserts"}
+        };
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(`page-${pageName}`).classList.add('active');
+
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            currentPage = pageName;
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('active');
+        }
+
+        // Filter Menu
+        function filterMenu(category) {
+            const cards = document.querySelectorAll('.menu-card');
+            const pills = document.querySelectorAll('.category-pill');
+
+            // Update active pill
+            pills.forEach(pill => pill.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Add to Cart
+        function addToCart(itemId) {
+            const item = menuItems[itemId];
+            const existingItem = cart.find(i => i.id === itemId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...item, quantity: 1});
+            }
+
+            updateCartUI();
+
+            // Show feedback
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.background = 'linear-gradient(135deg, #ffd700, #ffed4e)';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 500);
+        }
+
+        // Update Cart UI
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cart-count');
+            const mobileBadge = document.getElementById('mobile-cart-count');
+
+            if (count > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = count;
+                mobileBadge.textContent = count;
+            } else {
+                badge.style.display = 'none';
+                mobileBadge.textContent = '0';
+            }
+        }
+
+        // Open Cart
+        function openCart() {
+            const modal = document.getElementById('cart-modal');
+            const itemsContainer = document.getElementById('cart-items');
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-shopping-cart text-6xl mb-4"></i>
+                        <p class="text-xl">Корзина пуста</p>
+                        <p class="mt-2">Добавьте что-нибудь из меню!</p>
+                    </div>
+                `;
+                document.getElementById('cart-total').textContent = '0 ₽';
+            } else {
+                itemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item rounded">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-bold text-lg text-white">${item.name}</h4>
+                            <button class="text-red-400 hover:text-red-300" onclick="removeFromCart(${item.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="text-white font-bold text-lg w-8 text-center">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <div class="text-bizon-yellow font-bold text-xl">
+                                ${item.price * item.quantity} ₽
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                document.getElementById('cart-total').textContent = `${total} ₽`;
+            }
+
+            modal.classList.add('active');
+        }
+
+        // Close Cart
+        function closeCart() {
+            document.getElementById('cart-modal').classList.remove('active');
+        }
+
+        // Update Quantity
+        function updateQuantity(itemId, delta) {
+            const item = cart.find(i => i.id === itemId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    openCart();
+                    updateCartUI();
+                }
+            }
+        }
+
+        // Remove from Cart
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            openCart();
+            updateCartUI();
+        }
+
+        // Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Корзина пуста!');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemsList = cart.map(item => `${item.name} x${item.quantity}`).join('\n');
+
+            alert(`🎉 Спасибо за заказ!\n\nВаш заказ:\n${itemsList}\n\nИтого: ${total} ₽\n\nМы свяжемся с вами в ближайшее время для подтверждения!`);
+
+            cart = [];
+            updateCartUI();
+            closeCart();
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Close modals on outside click
+        document.getElementById('cart-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'cart-modal') {
+                closeCart();
+            }
+        });
+    </script>
+</body>
+</html>
